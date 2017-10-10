@@ -20,15 +20,21 @@ public class Path : MonoBehaviour
 
         nodes = pathTransforms.Where(x => x != transform).ToList();
 
-
         //Draw line between every node
         for (var i = 0; i < nodes.Count; i++)
         {
-            //Check if node is not going to high
-            if (i + 1 > nodes.Count) continue;
-
             var currentNode = nodes[i].position;
-            var nextNode = nodes[i + 1].position;
+            var nextNode = Vector3.zero;
+
+            //Exist multiple nodes
+            if (nodes.Count <= 1) continue;
+           
+            //if we hit the last one
+            if (i + 1 > nodes.Count - 1)
+                nextNode = nodes[0].position;
+            if (i + 1 <= nodes.Count - 1)
+                nextNode = nodes[i + 1].position;
+
             Gizmos.DrawLine(currentNode, nextNode);
         }
     }
